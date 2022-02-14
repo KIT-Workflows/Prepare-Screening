@@ -1,0 +1,63 @@
+
+<WaNoTemplate>
+
+	<WaNoMeta>
+ 		<Author>
+		<Name> Tobias Schlöder </Name>
+  		<Email> tobias.schloeder@kit.edu</Email>
+	i	</Author>
+		<Description>
+			This is a WaNo for creating preparing structure files for a subsequent computational screening
+ 		</Description>
+	</WaNoMeta>
+
+	<WaNoRoot name="Settings">
+
+		<WaNoDictBox name='Molecules input'>
+			<WaNoBool name='Multiple molecules'>False</WaNoBool>
+			<WaNoInviBox name='Screening' visibility_condition='%s == True' visibility_var_path='Molecules input.Multiple molecules'>
+				<WaNoDropDown name='Type of input'>
+					<Entry id='0' chosen='True'>List of SMILES</Entry>
+					<Entry id='1'>List of SMILES with charge/multiplicity</Entry>
+					<Entry id='2'>Archive of xyz files</Entry>
+					<Entry id='3'>Archive of Gaussian input files</Entry>
+				</WaNoDropDown>
+				<WaNoFile name='Molecules file' logical_filename='mol_file'>Molecules file</WaNoFile>
+			</WaNoInviBox>
+			<WaNoInviBox name='Single molecule' visibility_condition='%s == False' visibility_var_path='Molecules input.Multiple molecules'>
+				<WaNoDropDown name='Type of input'>
+					<Entry id='0' chosen='True'>SMILES</Entry>
+					<Entry id='1'>xyz file</Entry>
+					<Entry id='2'>Gaussian input file</Entry>
+				</WaNoDropDown>
+				<WaNoFile name='Structure file' logical_filename='structure' visibility_condition='"%s" != "SMILES"' visibility_var_path='Molecules input.Single molecule.Type of input'>Structure file</WaNoFile>
+				<WaNoString name='SMILES' visibility_condition='"%s" == "SMILES"' visibility_var_path='Molecules input.Single molecule.Type of input'>SMILES</WaNoString>
+				<WaNoInt name='Charge' visibility_condition='"%s" != "Gaussian input file"' visibility_var_path='Molecules input.Single molecule.Type of input'>0</WaNoInt>
+				<WaNoInt name='Multiplicity' visibility_condition='"%s" != "Gaussian input file"' visibility_var_path='Molecules input.Single molecule.Type of input'>1</WaNoInt>
+			</WaNoInviBox>
+		</WaNoDictBox>
+		<WaNoDictBox name='Calculation of spectra'>
+			<WaNoBool name='IR'>True</WaNoBool>
+			<WaNoBool name='UV-Vis adsorption'>True</WaNoBool>
+			<WaNoBool name='UV-Vis emission from Sn'>True</WaNoBool>
+			<WaNoInt name='State for emission spectrum' visibility_condition='%s == True' visibility_var_path='Calculation of spectra.UV-Vis emission from Sn'>1</WaNoInt>
+		</WaNoDictBox>
+
+	</WaNoRoot>
+
+	<WaNoExecCommand>
+	export NANOVER=V4
+	source $NANOMATCH/$NANOVER/local_anaconda/bin/activate
+	conda activate simstack_kit
+	source $NANOMATCH/$NANOVER/configs/marvin.config  
+	python setup_screening.py
+	</WaNoExecCommand>
+
+	<WaNoInputFiles>
+        	<WaNoInputFile logical_filename="setup_screening.py">setup_screening.py</WaNoInputFile>
+    	</WaNoInputFiles>
+    
+	<WaNoOutputFiles>
+        	<WaNoOutputFile>output_dict.yml</WaNoOutputFile>
+    	</WaNoOutputFiles>
+</WaNoTemplate>
