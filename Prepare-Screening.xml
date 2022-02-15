@@ -38,8 +38,8 @@
 		</WaNoDictBox>
 		<WaNoDictBox name='Calculation of spectra'>
 			<WaNoBool name='IR'>True</WaNoBool>
-			<WaNoBool name='UV-Vis adsorption'>True</WaNoBool>
-			<WaNoBool name='UV-Vis emission from Sn'>True</WaNoBool>
+			<WaNoBool name='UV-Vis absorption'>False</WaNoBool>
+			<WaNoBool name='UV-Vis emission from Sn' visibility_condition='%s == True' visibility_var_path='Calculation of spectra.UV-Vis absorption'>False</WaNoBool>
 			<WaNoInt name='State for emission spectrum' visibility_condition='%s == True' visibility_var_path='Calculation of spectra.UV-Vis emission from Sn'>1</WaNoInt>
 		</WaNoDictBox>
 

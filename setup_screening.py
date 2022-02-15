@@ -104,7 +104,10 @@ if __name__ == '__main__':
             else:
                 os.rename('structure','structure.xyz')
 
-            write_gaussian_input('structure.xyz','structure',single_mol_dict['Charge'],single_mol_dict['Multiplicity'])
+            write_gaussian_input('structure.xyz','structure.inp',single_mol_dict['Charge'],single_mol_dict['Multiplicity'])
+
+        else:
+            os.rename('structure','structure.inp')
 
         structures = ['structure']
 
