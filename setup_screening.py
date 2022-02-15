@@ -53,7 +53,6 @@ if __name__ == '__main__':
 
     if mol_input['Multiple molecules']:
         multi_mol_dict = mol_input['Screening']
-        structures = []
 
         if multi_mol_dict['Type of input'] == 'List of SMILES':
             with open('mol_file') as infile:
@@ -64,7 +63,6 @@ if __name__ == '__main__':
                 xyz = '%s.xyz'%mol_name
                 smi2xyz(smiles[i],xyz)
                 write_gaussian_input(xyz,'%s.inp'%mol_name,0,1)
-                structures.append(mol_name)
 
         elif multi_mol_dict['Type of input'] == 'List of SMILES with charge/multiplicity':
             with open('mol_file') as infile:
@@ -76,7 +74,6 @@ if __name__ == '__main__':
                 scm = smiles[i].rstrip().split(' ')
                 smi2xyz(scm[0],xyz)
                 write_gaussian_input(xyz,'%s.inp'%mol_name,int(scm[1]),int(scm[2]))
-                structures.append(mol_name)
 
         else:
             tmp_dir='tmp'
@@ -87,7 +84,6 @@ if __name__ == '__main__':
                 if multi_mol_dict['Type of input'] == 'Archive of xyz files':
                     write_gaussian_input(filename,filename.replace('xyz','inp'),0,1)    
 
-                structures.append(filename)
                 os.rename(filename,'../%s'%filename)
 
             os.chdir('..')
@@ -108,9 +104,4 @@ if __name__ == '__main__':
 
         else:
             os.rename('structure','structure.inp')
-
-        structures = ['structure']
-
-    with open('output_dict.yml','w') as outfile:
-        yaml.dump({'structures': structures}, outfile)
 

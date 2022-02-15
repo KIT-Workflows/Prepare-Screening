@@ -57,7 +57,4 @@
         	<WaNoInputFile logical_filename="setup_screening.py">setup_screening.py</WaNoInputFile>
     	</WaNoInputFiles>
     
-	<WaNoOutputFiles>
-        	<WaNoOutputFile>output_dict.yml</WaNoOutputFile>
-    	</WaNoOutputFiles>
 </WaNoTemplate>
